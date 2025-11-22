@@ -27,17 +27,7 @@ jobs:
         run: npm ci || npm install
 
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
-
-      - name: Start Vite dev server
-        run: npm run dev &
-        # 在背景啟動 Vite dev server
-
-      - name: Wait for dev server
-        run: npx wait-on http://localhost:5173/
-
-      - name: Run Playwright tests
-        run: npm run test:playwright
+        run: npm run install:browsers
 
       - name: Run website checks
         run: npm run check:all
