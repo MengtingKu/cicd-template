@@ -1,24 +1,30 @@
-import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
+import './style.css';
+const btn = document.querySelector('.btn');
+const input = document.querySelector('input[type="date"]');
+const resultBox = document.querySelector('.result-box');
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+const calculateAge = () => {
+  const birthDate = new Date(input.value);
+  const today = new Date();
+  const ageInYears = (today - birthDate) / (365 * 24 * 60 * 60 * 1000); // 大約歲數
 
-setupCounter(document.querySelector('#counter'))
+  const dogAge = ageInYears;
+  const humanAge = dogAge * 7;
+
+  resultBox.querySelectorAll('.highlight')[0].textContent = dogAge.toFixed(1);
+  resultBox.querySelectorAll('.highlight')[1].textContent = humanAge.toFixed(1);
+};
+
+btn.addEventListener('click', () => {
+  calculateAge();
+
+  // 存到 localStorage
+  localStorage.setItem('birthDate', input.value);
+});
+
+// 載入上次輸入
+const savedDate = localStorage.getItem('birthDate');
+if (savedDate) {
+  input.value = savedDate;
+  calculateAge();
+}
